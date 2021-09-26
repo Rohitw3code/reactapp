@@ -11,46 +11,45 @@ function App() {
 
   const ref = firebase.firestore().collection("users");
 
-  function getUsers() {
+  // function getUsers() {
+  //   setloading(true);
+  //   ref.onSnapshot((qs) => {
+  //     const item = [];
+  //     qs.forEach((doc) => {
+  //       item.push(doc.data());
+  //     });
+  //     setloading(false);
+  //     setUser(item);
+  //   });
+  // }
+
+  function getUsers2() {
     setloading(true);
-    ref.onSnapshot((qs) => {
-      const item = [];
-      qs.forEach((doc) => {
-        item.push(doc.data());
-      });
+    ref.get().then((item) => {
+      const items = item.docs.map((doc) => doc.data());
+      setUser(items);
       setloading(false);
-      setUser(item);
-    });
+    })
   }
-
-  if (loading) {
-    return <h>Loading...</h>;
-  }
-
-
 
   useEffect(() => {
-    getUsers();
+    getUsers2();
   }, []);
 
 
-  // docc.get().then((qs) => {
-  //   qs.forEach(i => {
-  //     console.log(i.data().name);
-  //     return (<p>{i.data().name}</p>);
-  //   })
-  // });
-
-
+  if (loading) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
     <div>
       <h1>Hello Firebase</h1>
       {user.map((element) => {
-        <div key={element.id}>
-          <h2>{user.name}</h2>
-          <h3>{user.class}</h3>
-        </div>
+        return (
+          <div key={element.class}>
+            <h2>hello {element.name}</h2>
+            <h3>{element.class}</h3>
+          </div>);
       })}
     </div>
   );
