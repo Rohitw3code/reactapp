@@ -17,14 +17,17 @@ export default function UpdatePost() {
         setStd(event.target.value);
     }
 
+
     const updatePost = () => {
         firebase.firestore().collection("users").doc(item.id).update({ "name": name, "class": std });
     }
 
 
 
-    const [name, setName] = useState("");
-    const [std, setStd] = useState("");
+
+
+    const [name, setName] = useState(item.name);
+    const [std, setStd] = useState(item.std);
 
     console.log(item.name);
 

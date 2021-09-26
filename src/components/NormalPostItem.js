@@ -32,7 +32,7 @@ export default function NormalPostItem(props) {
         <div className="container">
 
             <div className="card my-5">
-                <div className="card-header">
+                <div className="card-header"> ID :
                     {props.id}
                 </div>
                 <div className="card-body">

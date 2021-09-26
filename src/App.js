@@ -30,8 +30,6 @@ function App() {
         <Router>
           <NavBar />
 
-          <h2 className="container mx-5">All Post</h2>
-
           <Alert alert={alert} />
 
           <div className="container">
