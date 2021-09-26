@@ -15,7 +15,7 @@ export default class Posts extends Component {
             loading: true,
             lastId: null
         }
-        this.ref = firebase.firestore().collection("users").orderBy('time', 'desc').limit(5);
+        this.ref = firebase.firestore().collection("users").orderBy('time', 'desc').limit(4);
     }
 
 
@@ -34,8 +34,9 @@ export default class Posts extends Component {
                 let datas = Object.assign({}, idd, doc.data());
                 this.state.items.push(datas);
                 this.setState({ lastId: doc });
+                this.setState({ loading: false });
             });
-            this.setState({ loading: false, user: this.state.items });
+            this.setState({ user: this.state.items });
         });
 
 
@@ -44,21 +45,38 @@ export default class Posts extends Component {
     render() {
         let { showAlert } = this.props;
         const loadMore = () => {
-            this.ref = firebase.firestore().collection("users").orderBy('time', 'desc').startAfter(this.state.lastId).limit(5);
-            this.setState({ loading: true });
-            this.ref.onSnapshot((qs) => {
-                qs.forEach((doc) => {
-                    let idd = {};
-                    idd["id"] = doc.id;
-                    let datas = Object.assign({}, idd, doc.data());
-                    this.state.items.push(datas);
-                    this.state.uniqueId.push(doc.id);
-                    this.setState({ lastId: doc });
+            if (!this.state.loading) {
+                console.log("hello");
+                this.setState({ loading: true });
+                this.ref = firebase.firestore().collection("users").orderBy('time', 'desc').startAfter(this.state.lastId).limit(4);
+                let l = this.ref.onSnapshot((qs) => {
+                    qs.forEach((doc) => {
+                        let idd = {};
+                        idd["id"] = doc.id;
+                        let datas = Object.assign({}, idd, doc.data());
+                        this.state.items.push(datas);
+                        this.state.uniqueId.push(doc.id);
+                        this.setState({ lastId: doc });
+                        return false;
+                    });
+                    l();
+                    this.setState({ loading: true, user: this.state.items });
+                    console.log("mannn " + l);
                 });
-                this.setState({ loading: false, user: this.state.items });
-            });
-
+            }
         }
+
+        window.onscroll = function () { myFunction() };
+        const myFunction = () => {
+            if (document.body.scrollTop > 350 || document.documentElement.scrollTop > 350) {
+                if (!this.state.loading) {
+                    loadMore();
+                    console.log("LoadMore : " + this.state.loading);
+                }
+            }
+        }
+
+
         return (
             <div>
                 <h2 className="container mx-2">All Post</h2>
@@ -67,7 +85,9 @@ export default class Posts extends Component {
                         <NormalPostItem showAlert={showAlert} id={element.id} name={element.name} std={element.class} time={element.time} />
                     </div>
                 })}
-                <button type="button" onClick={loadMore} className="btn btn-secondary">Load More</button>
+                <div className="container mx-5 my-5">
+                    <button type="button" onClick={loadMore} className="btn btn-secondary">Load More</button>
+                </div>
             </div>
         )
     }
