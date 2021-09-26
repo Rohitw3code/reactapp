@@ -1,57 +1,48 @@
 import './App.css';
-import "firebase/compat/firestore";
-import firebase from "./Firebase";
-import React, { useState, useEffect } from "react";
-
+import React, { useState } from "react";
+import Posts from './components/Posts';
+import WriteNormalPost from './components/WriteNormalPost';
+import NavBar from './components/NavBar';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Alert from './components/Alert';
 
 function App() {
 
-  const [user, setUser] = useState([]);
-  const [loading, setloading] = useState(false);
+  const [alert, setAlert] = useState(null);
 
-  const ref = firebase.firestore().collection("users");
-
-  // function getUsers() {
-  //   setloading(true);
-  //   ref.onSnapshot((qs) => {
-  //     const item = [];
-  //     qs.forEach((doc) => {
-  //       item.push(doc.data());
-  //     });
-  //     setloading(false);
-  //     setUser(item);
-  //   });
-  // }
-
-  function getUsers2() {
-    setloading(true);
-    ref.get().then((item) => {
-      const items = item.docs.map((doc) => doc.data());
-      setUser(items);
-      setloading(false);
-    })
+  const showAlert = (message, type) => {
+    setAlert({ msg: message, type: type });
   }
 
-  useEffect(() => {
-    getUsers2();
-  }, []);
 
+  setTimeout(() => {
+    setAlert(null);
+  }, 2000);
 
-  if (loading) {
-    return <h1>Loading...</h1>;
-  }
 
   return (
-    <div>
-      <h1>Hello Firebase</h1>
-      {user.map((element) => {
-        return (
-          <div key={element.class}>
-            <h2>hello {element.name}</h2>
-            <h3>{element.class}</h3>
-          </div>);
-      })}
-    </div>
+    <>
+      <Router>
+        <NavBar />
+
+        <Alert alert={alert} />
+
+        <div className="container">
+
+          <Switch>
+            <Route exact path="/WritePost">
+              <WriteNormalPost showAlert={showAlert} />
+            </Route>
+
+            <Route exact path="/">
+              <Posts showAlert={showAlert} />
+            </Route>
+
+          </Switch>
+
+        </div>
+      </Router>
+    </>
   );
 }
 
