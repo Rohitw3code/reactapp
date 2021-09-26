@@ -1,23 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react';
+// import Delete from "../functions/Delete";
 import "firebase/compat/firestore";
 import firebase from "../Firebase";
+import { Link } from 'react-router-dom';
+import userContext from '../context/userContext';
 
-export default function WriteNormalPost(props) {
 
-    const newPost = () => {
-
-        if (name.trim() != "" || std.trim() != "") {
-            const userData = {
-                name: name,
-                class: std,
-                time: firebase.firestore.FieldValue.serverTimestamp()
-            }
-            firebase.firestore().collection("users").doc().set(userData);
-            props.showAlert("Posted Successfully", "success");
-
-        }
-
-    }
+export default function UpdatePost() {
+    const item = useContext(userContext);
 
     const onTextNameChange = (event) => {
         setName(event.target.value);
@@ -27,12 +17,24 @@ export default function WriteNormalPost(props) {
         setStd(event.target.value);
     }
 
+    const updatePost = () => {
+        firebase.firestore().collection("users").doc(item.id).update({ "name": name, "class": std });
+    }
+
+
+
     const [name, setName] = useState("");
     const [std, setStd] = useState("");
 
+    console.log(item.name);
+
+    // setName(item.name);
+    // setStd(item.std);
+
+
     return (
         <div>
-            <h2>Create New Post</h2>
+            <h2>Update Post </h2>
             <div className="input-group my-5">
                 <span className="input-group-text">First and last name</span>
                 <input type="text" aria-label="First name" placeholder="Your name" value={name} onChange={onTextNameChange} className="form-control" />
@@ -43,7 +45,7 @@ export default function WriteNormalPost(props) {
                 <input type="text" aria-label="First name" placeholder="Class" value={std} onChange={onTextStdChange} className="form-control" />
             </div>
 
-            <button type="button" className="btn btn-success" onClick={newPost}>Post</button>
+            <button type="button" onClick={updatePost} className="btn btn-success" >Upadte</button>
 
 
         </div>

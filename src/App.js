@@ -5,10 +5,14 @@ import WriteNormalPost from './components/WriteNormalPost';
 import NavBar from './components/NavBar';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Alert from './components/Alert';
+import UpdatePost from './components/UpdatePost';
+import UserState from './context/userState';
 
 function App() {
 
   const [alert, setAlert] = useState(null);
+
+
 
   const showAlert = (message, type) => {
     setAlert({ msg: message, type: type });
@@ -22,26 +26,34 @@ function App() {
 
   return (
     <>
-      <Router>
-        <NavBar />
+      <UserState>
+        <Router>
+          <NavBar />
 
-        <Alert alert={alert} />
+          <h2 className="container mx-5">All Post</h2>
 
-        <div className="container">
+          <Alert alert={alert} />
 
-          <Switch>
-            <Route exact path="/WritePost">
-              <WriteNormalPost showAlert={showAlert} />
-            </Route>
+          <div className="container">
 
-            <Route exact path="/">
-              <Posts showAlert={showAlert} />
-            </Route>
+            <Switch>
+              <Route exact path="/WritePost">
+                <WriteNormalPost showAlert={showAlert} />
+              </Route>
 
-          </Switch>
+              <Route exact path="/">
+                <Posts showAlert={showAlert} />
+              </Route>
 
-        </div>
-      </Router>
+              <Route exact path="/UpdatePost">
+                <UpdatePost />
+              </Route>
+
+            </Switch>
+
+          </div>
+        </Router>
+      </UserState>
     </>
   );
 }
