@@ -8,9 +8,9 @@ import Alert from './components/Alert';
 import UpdatePost from './components/UpdatePost';
 import UserState from './context/userState';
 import userContext from './context/userContext';
+import Login from './components/Auth/Login';
 
 function App() {
-  const item = useContext(userContext);
 
   const [alert, setAlert] = useState(null);
 
@@ -19,8 +19,6 @@ function App() {
   const showAlert = (message, type) => {
     setAlert({ msg: message, type: type });
   }
-
-  // item.showAlert1 = showAlert("hello", "danger");
 
 
 
@@ -50,6 +48,10 @@ function App() {
 
               <Route exact path="/UpdatePost">
                 <UpdatePost showAlert={showAlert} />
+              </Route>
+
+              <Route exact path="/Login">
+                <Login showAlert={showAlert} />
               </Route>
 
             </Switch>

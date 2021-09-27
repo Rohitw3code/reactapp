@@ -6,7 +6,7 @@ export default function WriteNormalPost(props) {
 
     const newPost = () => {
 
-        if (name.trim() != "" || std.trim() != "") {
+        if (name.trim() !== "" || std.trim() !== "") {
             const userData = {
                 name: name,
                 class: std,
