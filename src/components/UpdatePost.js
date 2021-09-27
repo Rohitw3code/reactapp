@@ -4,9 +4,10 @@ import "firebase/compat/firestore";
 import firebase from "../Firebase";
 import { Link } from 'react-router-dom';
 import userContext from '../context/userContext';
+import App from '../App';
 
 
-export default function UpdatePost() {
+export default function UpdatePost(props) {
     const item = useContext(userContext);
 
     const onTextNameChange = (event) => {
@@ -20,6 +21,7 @@ export default function UpdatePost() {
 
     const updatePost = () => {
         firebase.firestore().collection("users").doc(item.id).update({ "name": name, "class": std });
+        props.showAlert("Updated Successfully", "success");
     }
 
 
@@ -28,11 +30,6 @@ export default function UpdatePost() {
 
     const [name, setName] = useState(item.name);
     const [std, setStd] = useState(item.std);
-
-    console.log(item.name);
-
-    // setName(item.name);
-    // setStd(item.std);
 
 
     return (

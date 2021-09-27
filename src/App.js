@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Posts from './components/Posts';
 import WriteNormalPost from './components/WriteNormalPost';
 import NavBar from './components/NavBar';
@@ -7,8 +7,10 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Alert from './components/Alert';
 import UpdatePost from './components/UpdatePost';
 import UserState from './context/userState';
+import userContext from './context/userContext';
 
 function App() {
+  const item = useContext(userContext);
 
   const [alert, setAlert] = useState(null);
 
@@ -17,6 +19,9 @@ function App() {
   const showAlert = (message, type) => {
     setAlert({ msg: message, type: type });
   }
+
+  // item.showAlert1 = showAlert("hello", "danger");
+
 
 
   setTimeout(() => {
@@ -44,7 +49,7 @@ function App() {
               </Route>
 
               <Route exact path="/UpdatePost">
-                <UpdatePost />
+                <UpdatePost showAlert={showAlert} />
               </Route>
 
             </Switch>

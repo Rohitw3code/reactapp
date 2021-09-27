@@ -1,19 +1,21 @@
-import { useState } from "react";
 import userContext from "./userContext";
 
 const UserState = (props) => {
-    const state1 = {
+    const state = {
         "id": "no_id",
         "name": "no_name",
         "std": "no_std"
     }
 
-    // const [state, setState] = useState(state1);
+    const showAlert1 = () => {
+        alert("No :((");
+    }
+
 
 
 
     return (
-        <userContext.Provider value={state1}>
+        <userContext.Provider value={{ state, showAlert1 }}>
             {props.children}
         </userContext.Provider>
     )
