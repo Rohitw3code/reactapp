@@ -12,7 +12,7 @@ export default function WriteNormalPost(props) {
                 class: std,
                 time: firebase.firestore.FieldValue.serverTimestamp()
             }
-            firebase.firestore().collection("users").doc().set(userData);
+            firebase.firestore().collection("posts").doc().set(userData);
             props.showAlert("Posted Successfully", "success");
 
         }

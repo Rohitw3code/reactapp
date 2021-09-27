@@ -15,7 +15,7 @@ export default class Posts extends Component {
             loading: true,
             lastId: null
         }
-        this.ref = firebase.firestore().collection("users").orderBy('time', 'desc').limit(4);
+        this.ref = firebase.firestore().collection("posts").orderBy('time', 'desc').limit(4);
     }
 
 
@@ -48,7 +48,7 @@ export default class Posts extends Component {
             if (!this.state.loading) {
                 console.log("hello");
                 this.setState({ loading: true });
-                this.ref = firebase.firestore().collection("users").orderBy('time', 'desc').startAfter(this.state.lastId).limit(4);
+                this.ref = firebase.firestore().collection("posts").orderBy('time', 'desc').startAfter(this.state.lastId).limit(4);
                 let l = this.ref.onSnapshot((qs) => {
                     qs.forEach((doc) => {
                         let idd = {};

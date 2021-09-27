@@ -20,7 +20,7 @@ export default function UpdatePost(props) {
 
 
     const updatePost = () => {
-        firebase.firestore().collection("users").doc(item.id).update({ "name": name, "class": std });
+        firebase.firestore().collection("posts").doc(item.id).update({ "name": name, "class": std });
         props.showAlert("Updated Successfully", "success");
     }
 
