@@ -3,7 +3,7 @@ import React, { useState, useContext } from 'react';
 import "firebase/compat/firestore";
 import firebase from "../Firebase";
 import { Link } from 'react-router-dom';
-import userContext from '../context/userContext';
+import userContext from '../context/postContext';
 import App from '../App';
 
 

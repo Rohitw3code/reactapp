@@ -1,10 +1,10 @@
-import userContext from "./userContext";
+import postContext from "./postContext";
 
 const UserState = (props) => {
     const state = {
         "id": "no_id",
-        "name": "no_name",
-        "std": "no_std"
+        "title": "no_title",
+        "description": "no_description"
     }
 
     const showAlert1 = () => {
@@ -15,9 +15,9 @@ const UserState = (props) => {
 
 
     return (
-        <userContext.Provider value={{ state, showAlert1 }}>
+        <postContext.Provider value={{ state, showAlert1 }}>
             {props.children}
-        </userContext.Provider>
+        </postContext.Provider>
     )
 }
 

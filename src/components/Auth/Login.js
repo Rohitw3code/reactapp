@@ -4,8 +4,6 @@ import firebase from 'firebase/compat/app';
 // import firebase from "../Firebase";
 import auth from "firebase/compat/auth";
 import "firebase/compat/firestore";
-import Posts from "../Posts";
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 
 export default function Login(props) {
@@ -14,7 +12,7 @@ export default function Login(props) {
         import("@lottiefiles/lottie-player");
     });
 
-    // git it some time to authanticate
+    // give it some time to authanticate
 
     const history = useHistory();
     const auth = firebase.auth();
@@ -40,7 +38,7 @@ export default function Login(props) {
         firebase.firestore().collection("users").doc(user.uid).get().then((data) => {
             console.log(data);
             if (data.data().id) {
-                props.showAlert("Account Already Exist", "danger");
+                props.showAlert("You are Logged-In", "info");
                 history.push("/");
             }
             else {

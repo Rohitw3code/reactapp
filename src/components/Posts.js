@@ -82,7 +82,7 @@ export default class Posts extends Component {
                 <h2 className="container mx-2">All Post</h2>
                 {this.state.user.map((element) => {
                     return <div className="container" key={element.id}>
-                        <NormalPostItem showAlert={showAlert} id={element.id} name={element.name} std={element.class} time={element.time} />
+                        <NormalPostItem showAlert={showAlert} data={element} />
                     </div>
                 })}
                 <div className="container mx-5 my-5">

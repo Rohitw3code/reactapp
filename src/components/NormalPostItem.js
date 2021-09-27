@@ -3,10 +3,10 @@ import React, { useContext } from 'react';
 import "firebase/compat/firestore";
 import firebase from "../Firebase";
 import { Link } from 'react-router-dom';
-import userContext from '../context/userContext';
+import postContext from '../context/postContext';
 
 export default function NormalPostItem(props) {
-    const item = useContext(userContext);
+    const item = useContext(postContext);
 
     function toDateTime(secs) {
         var t = new Date(1970, 0, 1); // Epoch
@@ -21,8 +21,8 @@ export default function NormalPostItem(props) {
 
     const updateId = (props) => {
         item.id = props.id;
-        item.name = props.name;
-        item.std = props.std;
+        item.title = props.title;
+        item.description = props.description;
     }
 
 
@@ -33,13 +33,13 @@ export default function NormalPostItem(props) {
 
             <div className="card my-5">
                 <div className="card-header"> ID :
-                    {props.id}
+                    {props.data.id}
                 </div>
                 <div className="card-body">
-                    <h5 className="card-title">{props.name}</h5>
-                    <p className="card-text">{props.std}</p>
+                    <h5 className="card-title">{props.data.title}</h5>
+                    <p className="card-text">{props.data.description}</p>
                     {/* <p className="card-text">{timeAgo.format(Date.now() - props.time, 'mini-now')}</p> */}
-                    <a>{toDateTime(props.time.seconds).toDateString()}</a>
+                    <a>{toDateTime(props.data.time.seconds).toDateString()}</a>
                     <button type="button" onClick={deletePost} className="btn btn-danger mx-5">delete</button>
                     <Link type="button" to="/updatePost" onClick={() => { updateId(props) }} className="btn btn-primary">update</Link>                </div>
             </div>
