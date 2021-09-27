@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import firebase from 'firebase/compat/app';
 // import { GoogleAuthProvider } from "@firebase/auth";
 // import firebase from "../Firebase";
-import auth from "firebase/compat/auth"
+import auth from "firebase/compat/auth";
 
 export default function Login() {
     const ref = useRef(null);

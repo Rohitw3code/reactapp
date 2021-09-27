@@ -8,7 +8,7 @@ import Alert from './components/Alert';
 import UpdatePost from './components/UpdatePost';
 import UserState from './context/userState';
 import userContext from './context/userContext';
-import Login from './components/Login';
+import Login from './components/Auth/Login';
 
 function App() {
 
