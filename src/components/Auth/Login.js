@@ -37,7 +37,7 @@ export default function Login(props) {
         console.log("checking");
         firebase.firestore().collection("users").doc(user.uid).get().then((data) => {
             console.log(data);
-            if (data.data().id) {
+            if (data.data() != null) {
                 props.showAlert("You are Logged-In", "info");
                 history.push("/");
             }
@@ -50,6 +50,7 @@ export default function Login(props) {
     }
 
     const signInWithGoogle = () => {
+
         auth.signInWithPopup(googleProvider).then((res) => {
             checkId(res.user);
 

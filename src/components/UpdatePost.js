@@ -2,13 +2,11 @@ import React, { useState, useContext } from 'react';
 // import Delete from "../functions/Delete";
 import "firebase/compat/firestore";
 import firebase from "../Firebase";
-import { Link } from 'react-router-dom';
-import userContext from '../context/postContext';
-import App from '../App';
+import postContext from '../context/postContext';
 
 
 export default function UpdatePost(props) {
-    const item = useContext(userContext);
+    const item = useContext(postContext);
 
     const onTextNameChange = (event) => {
         setName(event.target.value);
@@ -20,16 +18,11 @@ export default function UpdatePost(props) {
 
 
     const updatePost = () => {
-        firebase.firestore().collection("posts").doc(item.id).update({ "name": name, "class": std });
+        firebase.firestore().collection("posts").doc(item.state.id).update({ "title": title, "description": desc });
         props.showAlert("Updated Successfully", "success");
     }
-
-
-
-
-
-    const [name, setName] = useState(item.name);
-    const [std, setStd] = useState(item.std);
+    const [title, setName] = useState(item.state.title);
+    const [desc, setStd] = useState(item.state.description);
 
 
     return (
@@ -37,12 +30,12 @@ export default function UpdatePost(props) {
             <h2>Update Post </h2>
             <div className="input-group my-5">
                 <span className="input-group-text">First and last name</span>
-                <input type="text" aria-label="First name" placeholder="Your name" value={name} onChange={onTextNameChange} className="form-control" />
+                <input type="text" aria-label="First name" placeholder="Your name" value={title} onChange={onTextNameChange} className="form-control" />
             </div>
 
             <div className="input-group my-5">
                 <span className="input-group-text">Standard</span>
-                <input type="text" aria-label="First name" placeholder="Class" value={std} onChange={onTextStdChange} className="form-control" />
+                <input type="text" aria-label="First name" placeholder="Class" value={desc} onChange={onTextStdChange} className="form-control" />
             </div>
 
             <button type="button" onClick={updatePost} className="btn btn-success" >Upadte</button>

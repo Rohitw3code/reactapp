@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import "firebase/compat/firestore";
 import firebase from "../Firebase";
-import auth from "firebase/compat/auth";
 import { useHistory } from "react-router-dom";
 
 export default function WriteNormalPost(props) {

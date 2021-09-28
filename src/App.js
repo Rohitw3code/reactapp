@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Posts from './components/Posts';
 import WriteNormalPost from './components/WriteNormalPost';
 import NavBar from './components/NavBar';
@@ -8,29 +8,45 @@ import Alert from './components/Alert';
 import UpdatePost from './components/UpdatePost';
 import UserState from './context/userState';
 import Login from './components/Auth/Login';
+import firebase from './Firebase';
 
 function App() {
-
-  const [alert, setAlert] = useState(null);
-
-
 
   const showAlert = (message, type) => {
     setAlert({ msg: message, type: type });
   }
-
-
+  const [alert, setAlert] = useState(null);
 
   setTimeout(() => {
     setAlert(null);
   }, 2000);
+
+  const [userName, setUserName] = useState("");
+  const [userImage, setUserImage] = useState("");
+
+  if (firebase.auth().currentUser != null) {
+    firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).get().then((d) => {
+      const details = d.data();
+      setUserName(details.name);
+      setUserImage(details.photoURL);
+    });
+  }
+
+
+
+
+
+
+
+
+
 
 
   return (
     <>
       <UserState>
         <Router>
-          <NavBar />
+          <NavBar userName={userName} userImage={userImage} />
 
           <Alert alert={alert} />
 
@@ -52,6 +68,7 @@ function App() {
               <Route exact path="/Login">
                 <Login showAlert={showAlert} />
               </Route>
+
 
             </Switch>
 

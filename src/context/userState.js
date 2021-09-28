@@ -1,21 +1,27 @@
 import postContext from "./postContext";
+import react, { useState } from "react";
 
 const UserState = (props) => {
-    const state = {
+    const state1 = {
         "id": "no_id",
         "title": "no_title",
         "description": "no_description"
     }
 
-    const showAlert1 = () => {
-        alert("No :((");
+    const [state, setState] = useState(state1);
+
+    const updateState = (v) => {
+        setState(v);
+        console.log(v);
     }
 
 
 
 
+
+
     return (
-        <postContext.Provider value={{ state, showAlert1 }}>
+        <postContext.Provider value={{ state, updateState }}>
             {props.children}
         </postContext.Provider>
     )

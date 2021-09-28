@@ -8,6 +8,7 @@ import postContext from '../context/postContext';
 export default function NormalPostItem(props) {
     const item = useContext(postContext);
 
+
     function toDateTime(secs) {
         var t = new Date(1970, 0, 1); // Epoch
         t.setSeconds(secs);
@@ -19,10 +20,8 @@ export default function NormalPostItem(props) {
         props.showAlert("Post is deleted successfully", "danger");
     }
 
-    const updateId = (props) => {
-        item.id = props.id;
-        item.title = props.title;
-        item.description = props.description;
+    const updateId = (value) => {
+        item.updateState({ id: value.id, title: value.title, description: value.description });
     }
 
 
@@ -32,8 +31,9 @@ export default function NormalPostItem(props) {
         <div className="container">
 
             <div className="card my-5">
-                <div className="card-header"> ID :
-                    {props.data.id}
+                <div className="card-header">
+                    <img src={props.data.userImage} width="30px" height="30px" style={{ borderRadius: "100px", borderColor: "#50BFE6", borderWidth: "2px", borderStyle: "solid", marginLeft: "10px", marginRight: "10px" }} />
+                    Name : {props.data.userName}
                 </div>
                 <div className="card-body">
                     <h5 className="card-title">{props.data.title}</h5>
@@ -41,7 +41,7 @@ export default function NormalPostItem(props) {
                     {/* <p className="card-text">{timeAgo.format(Date.now() - props.time, 'mini-now')}</p> */}
                     <a>{toDateTime(props.data.time.seconds).toDateString()}</a>
                     <button type="button" onClick={deletePost} className="btn btn-danger mx-5">delete</button>
-                    <Link type="button" to="/updatePost" onClick={() => { updateId(props) }} className="btn btn-primary">update</Link>                </div>
+                    <Link type="button" to="/updatePost" onClick={() => { updateId(props.data) }} className="btn btn-primary">update</Link>                </div>
             </div>
         </div >
     )
