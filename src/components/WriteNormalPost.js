@@ -2,10 +2,20 @@ import React, { useState } from 'react'
 import "firebase/compat/firestore";
 import firebase from "../Firebase";
 import auth from "firebase/compat/auth";
+import { useHistory } from "react-router-dom";
 
 export default function WriteNormalPost(props) {
 
-    const publisherId = firebase.auth().currentUser.uid;
+    const authValue = firebase.auth().currentUser;
+    const history = useHistory();
+
+    let publisherId = "";
+    if (authValue != null) {
+        publisherId = authValue.uid;
+    }
+    else {
+        history.push("/Login");
+    }
 
 
 
